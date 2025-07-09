@@ -6,13 +6,13 @@
 // Typically, this involves setting GOOGLE_APPLICATION_CREDENTIALS to the
 // content of the JSON key file you downloaded from your GCP service account.
 
-import { TextToSpeechClient } from '@google-cloud/text-to-speech';
+const { TextToSpeechClient } = require('@google-cloud/text-to-speech');
 
 // Initialize the client. The library will automatically find the credentials
 // set in the environment variables.
 const client = new TextToSpeechClient();
 
-export default async function handler(req, res) {
+module.exports = async function handler(req, res) {
   if (req.method !== 'POST') {
     return res.status(405).json({ message: 'Only POST requests are allowed' });
   }

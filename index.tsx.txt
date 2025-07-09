@@ -66,18 +66,11 @@ type AARData = {
 let audioQueue: HTMLAudioElement[] = [];
 let isPlayingQueue = false;
 
-// IMPORTANT: You will replace this placeholder URL with your own live backend URL from Part 1 below.
-const TTS_API_ENDPOINT = 'YOUR_BACKEND_URL_GOES_HERE/api/tts'; 
+// When deployed on Vercel, the app and the API live at the same domain.
+// This relative path will work automatically.
+const TTS_API_ENDPOINT = '/api/tts'; 
 
 const playGoogleVoice = async (text: string): Promise<void> => {
-    if (TTS_API_ENDPOINT.includes('YOUR_BACKEND_URL_GOES_HERE')) {
-        console.warn("TTS API endpoint is not set. Using fallback TTS.");
-        // Fallback for local development if you don't have a backend running
-        const utterance = new SpeechSynthesisUtterance(text);
-        window.speechSynthesis.speak(utterance);
-        return;
-    }
-
     try {
         const response = await fetch(TTS_API_ENDPOINT, {
             method: 'POST',
@@ -96,6 +89,9 @@ const playGoogleVoice = async (text: string): Promise<void> => {
         }
     } catch (error) {
         console.error("Failed to play Google voice:", error);
+        // Fallback to robotic voice if API fails
+        const utterance = new SpeechSynthesisUtterance("I'm having a connection issue. Please stand by.");
+        window.speechSynthesis.speak(utterance);
     }
 };
 
