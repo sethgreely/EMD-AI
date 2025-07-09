@@ -1,0 +1,402 @@
+:root {
+  --background-color: #121212;
+  --panel-background: #1e1e1e;
+  --text-primary: #ffffff;
+  --text-secondary: #b3b3b3;
+  --accent-red: #e53935; /* Bright, urgent red */
+  --accent-blue: #03a9f4; /* Clear, instructional blue */
+  --accent-green: #4caf50;
+  --accent-yellow: #ffc107;
+  --border-color: #333333;
+  --user-bubble: #373737;
+  --emd-bubble: #004d80;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html, body, #root, .app {
+  height: 100%;
+  width: 100%;
+  overflow: hidden;
+  font-family: 'Roboto', sans-serif;
+  background-color: var(--background-color);
+  color: var(--text-primary);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* --- Main Screen --- */
+.main-screen {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    height: 100%;
+    padding: 3rem 2rem;
+    text-align: center;
+}
+
+.main-header h1 {
+    font-size: 2.5rem;
+    font-weight: 700;
+    margin-bottom: 0.5rem;
+}
+.main-header p {
+    font-size: 1.1rem;
+    color: var(--text-secondary);
+    max-width: 600px;
+    margin: 0 auto;
+    line-height: 1.6;
+}
+
+.emergency-button-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+}
+
+.emergency-button {
+    background-color: var(--accent-red);
+    color: var(--text-primary);
+    border: none;
+    border-radius: 50%;
+    width: 200px;
+    height: 200px;
+    font-size: 2.5rem;
+    font-weight: 700;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    line-height: 1.2;
+    box-shadow: 0 0 20px rgba(229, 57, 53, 0.4);
+    animation: pulse 2s infinite;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.emergency-button:hover {
+    transform: scale(1.05);
+    box-shadow: 0 0 30px rgba(229, 57, 53, 0.6);
+    animation-play-state: paused;
+}
+
+.emergency-button-label {
+    margin-top: 1.5rem;
+    color: var(--text-secondary);
+    font-size: 1rem;
+    max-width: 300px;
+}
+
+.secondary-actions {
+    display: flex;
+    gap: 1.5rem;
+}
+
+.secondary-button {
+    background: transparent;
+    border: 1px solid var(--border-color);
+    color: var(--text-secondary);
+    padding: 0.75rem 1.5rem;
+    border-radius: 8px;
+    font-size: 1rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background-color 0.2s, color 0.2s, border-color 0.2s;
+}
+
+.secondary-button:hover {
+    background-color: var(--panel-background);
+    border-color: var(--accent-blue);
+    color: var(--text-primary);
+}
+
+
+/* --- Base Screen Layouts --- */
+.call-screen, .aar-screen {
+    width: 100%;
+    height: 100%;
+    background-color: var(--background-color);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    text-align: center;
+    animation: fadeIn 0.5s ease-in-out;
+}
+
+/* --- After Action Report Screen --- */
+.aar-screen {
+    justify-content: center;
+    padding: 2rem;
+    overflow-y: auto;
+}
+
+.flow-content { max-width: 600px; width: 100%; }
+.flow-content h2 { font-size: 2.2rem; margin-bottom: 2rem; text-align: center; }
+.report-section {
+    background-color: var(--panel-background);
+    border-radius: 12px;
+    padding: 1.5rem;
+    margin: 1.5rem auto;
+    text-align: left;
+    max-width: 500px;
+}
+.report-section h3 {
+    color: var(--accent-blue);
+    font-size: 1.2rem;
+    margin-bottom: 1rem;
+    border-bottom: 1px solid var(--border-color);
+    padding-bottom: 0.5rem;
+}
+.report-section p {
+    font-size: 1.1rem;
+    color: var(--text-secondary);
+    line-height: 1.6;
+}
+.report-section ul {
+    list-style: none;
+    padding: 0;
+}
+.report-section li {
+    font-size: 1.1rem;
+    color: var(--text-secondary);
+    padding: 0.5rem 0;
+}
+.aar-summary {
+    text-align: center;
+    font-style: italic;
+    color: var(--text-secondary);
+    margin-top: 1rem;
+    margin-bottom: 2rem;
+}
+.action-buttons { display: flex; flex-direction: column; gap: 1rem; width: 100%; }
+.primary-action { background-color: var(--accent-blue); color: var(--text-primary); padding: 1rem 1.5rem; font-size: 1.1rem; border: none; border-radius: 8px; cursor: pointer; }
+
+
+/* --- Call Screen Specifics --- */
+.call-header {
+    width: 100%;
+    padding: 0.5rem 1rem;
+    background-color: var(--background-color);
+    height: 60px; /* Give header a fixed height */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    z-index: 10;
+}
+
+.dynamic-island {
+    background-color: #000;
+    color: #fff;
+    border-radius: 24px;
+    padding: 0.5rem 1rem;
+    height: 48px;
+    min-width: 120px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    font-family: 'Roboto Mono', monospace;
+}
+.dynamic-island:hover {
+    transform: scale(1.05);
+}
+
+.eta-prompt, .eta-display {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    animation: fadeIn 0.3s;
+}
+.eta-display {
+    color: var(--accent-green);
+    font-weight: 700;
+}
+.eta-display svg {
+    width: 24px;
+    height: 24px;
+}
+
+.transcript-container {
+    flex-grow: 1;
+    width: 100%;
+    max-width: 800px;
+    padding: 1rem;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+}
+
+.message-bubble {
+    padding: 0.75rem 1.25rem;
+    border-radius: 18px;
+    line-height: 1.5;
+    max-width: 80%;
+    text-align: left;
+    animation: popIn 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.user-message {
+    background-color: var(--user-bubble);
+    color: var(--text-primary);
+    align-self: flex-end;
+    border-bottom-right-radius: 4px;
+}
+
+.emd-message {
+    background-color: var(--emd-bubble);
+    color: var(--text-primary);
+    align-self: flex-start;
+    border-bottom-left-radius: 4px;
+}
+
+.system-message {
+    font-style: italic;
+    color: var(--text-secondary);
+    align-self: center;
+    font-size: 0.9rem;
+    background: none;
+}
+
+.typing-indicator span {
+    display: inline-block;
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background-color: rgba(255,255,255,0.7);
+    margin: 0 2px;
+    animation: typing-bounce 1s infinite;
+}
+.typing-indicator span:nth-child(2) { animation-delay: 0.15s; }
+.typing-indicator span:nth-child(3) { animation-delay: 0.3s; }
+
+.call-footer {
+    width: 100%;
+    padding: 1rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: var(--background-color);
+    border-top: 1px solid var(--border-color);
+    position: relative;
+}
+
+.mic-button {
+    width: 72px;
+    height: 72px;
+    border-radius: 50%;
+    border: none;
+    cursor: pointer;
+    background-color: var(--accent-blue);
+    color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: background-color 0.2s ease;
+}
+.mic-button:disabled {
+    background-color: #555;
+    cursor: not-allowed;
+}
+.mic-button.listening {
+    background-color: var(--accent-red);
+    animation: mic-pulse 1.5s infinite;
+}
+.mic-button svg {
+    width: 36px;
+    height: 36px;
+}
+
+.hangup-button {
+    position: absolute;
+    left: 2rem;
+    top: 50%;
+    transform: translateY(-50%);
+    background-color: var(--accent-red);
+    color: white;
+    border: none;
+    border-radius: 8px;
+    padding: 0.75rem 1.25rem;
+    font-weight: 700;
+    cursor: pointer;
+    font-size: 1rem;
+}
+
+/* --- Learn Screen --- */
+.learn-screen {
+    padding: 2rem;
+    height: 100%;
+    overflow-y: auto;
+    animation: fadeIn 0.5s ease-in-out;
+}
+.learn-screen h1 {
+    font-size: 2.5rem;
+    margin-bottom: 2rem;
+    text-align: center;
+}
+.module-list {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 1.5rem;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+.module-card {
+    background-color: var(--panel-background);
+    border: 1px solid var(--border-color);
+    border-radius: 12px;
+    padding: 1.5rem;
+    transition: transform 0.2s, box-shadow 0.2s;
+}
+.module-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+}
+.module-cåard h2 {
+    font-size: 1.5rem;
+    color: var(--accent-blue);
+    margin-bottom: 0.5rem;
+}
+.module-card p {
+    color: var(--text-secondary);
+    line-height: 1.6;
+}
+.learn-screen .back-button {
+    margin-top: 2rem;
+    margin-left: auto;
+    margin-right: auto;
+    display: block;
+}
+
+
+/* --- Keyframe Animations --- */
+@keyframes pulse {
+    0% { box-shadow: 0 0 0 0 rgba(229, 57, 53, 0.7); }
+    70% { box-shadow: 0 0 0 20px rgba(229, 57, 53, 0); }
+    100% { box-shadow: 0 0 0 0 rgba(229, 57, 53, 0); }
+}
+@keyframes mic-pulse {
+    0% { box-shadow: 0 0 0 0 rgba(229, 57, 53, 0.7); }
+    100% { box-shadow: 0 0 0 15px rgba(229, 57, 53, 0); }
+}
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+@keyframes popIn {
+  from { transform: scale(0.8); opacity: 0; }
+  to { transform: scale(1); opacity: 1; }
+}
+@keyframes typing-bounce {
+  0%, 60%, 100% { transform: translateY(0); }
+  30% { transform: translateY(-4px); }
+}
